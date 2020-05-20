@@ -6,13 +6,15 @@ import (
 	"io/ioutil"
 )
 
+// Resource is rooting definition
 type Resource struct {
 	Root     string
 	Response string
 }
 
-func Read(resource_path string) *[]Resource {
-	var bytes = read(resource_path)
+// Read func create Resource struct from config file
+func Read(resourcePath string) *[]Resource {
+	var bytes = read(resourcePath)
 	var resources []Resource
 	err := json.Unmarshal(bytes, &resources)
 	if err != nil {
@@ -25,8 +27,8 @@ func Read(resource_path string) *[]Resource {
 	return &resources
 }
 
-func read(resource_path string) []byte {
-	bytes, err := ioutil.ReadFile(resource_path)
+func read(resourcePath string) []byte {
+	bytes, err := ioutil.ReadFile(resourcePath)
 	if err != nil {
 		panic(err)
 	}

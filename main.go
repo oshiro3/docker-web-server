@@ -9,14 +9,14 @@ import (
 
 func main() {
 	parser.Read("./config/root.json")
-	// http.HandleFunc("/", HelloHandler)
+	http.HandleFunc("/", helloHandler)
 	for i := 0; i < 5; i++ {
 		addHandler(i)
 	}
 	http.ListenAndServe(":8888", nil)
 }
 
-func HelloHandler(w http.ResponseWriter, r *http.Request) {
+func helloHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello, World! HOME\n"))
 }
 
