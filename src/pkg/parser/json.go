@@ -1,4 +1,4 @@
-package main
+package parser
 
 import (
 	"encoding/json"
@@ -11,8 +11,8 @@ type Resource struct {
 	Response string
 }
 
-func Read() *[]Resource {
-	var bytes = read()
+func Read(resource_path string) *[]Resource {
+	var bytes = read(resource_path)
 	var resources []Resource
 	err := json.Unmarshal(bytes, &resources)
 	if err != nil {
@@ -25,8 +25,8 @@ func Read() *[]Resource {
 	return &resources
 }
 
-func read() []byte {
-	bytes, err := ioutil.ReadFile("./root.json")
+func read(resource_path string) []byte {
+	bytes, err := ioutil.ReadFile(resource_path)
 	if err != nil {
 		panic(err)
 	}
@@ -34,5 +34,5 @@ func read() []byte {
 }
 
 func main() {
-	Read()
+	Read("../../config/root.json")
 }
