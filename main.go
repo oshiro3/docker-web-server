@@ -4,29 +4,19 @@ import (
 	"fmt"
 	"net/http"
 
+	"pkg/build"
 	"pkg/parser"
 )
 
 func main() {
-	parser.Read("./config/root.json")
+	resources := parser.Read("./config/root.json")
+	fmt.Printf("%+v\n", *resources)
 	http.HandleFunc("/", helloHandler)
-	for i := 0; i < 5; i++ {
-		addHandler(i)
-	}
+	build.Build(resources)
 	http.ListenAndServe(":8888", nil)
 }
 
+// TODO: This function return rooting list
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello, World! HOME\n"))
-}
-
-func createFunc(i int) func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(fmt.Sprintf("Hello, World! No.%d\n", i)))
-	}
-}
-
-func addHandler(i int) {
-	rooting := fmt.Sprintf("/dummy%d", i)
-	http.HandleFunc(rooting, createFunc(i))
 }
