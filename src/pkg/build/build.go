@@ -9,7 +9,6 @@ import (
 
 // Build Resources
 func Build(resources *[]parser.Resource) {
-	fmt.Printf("%+v\n", resources)
 	fmt.Printf("%+v\n", *resources)
 	for _, resource := range *resources {
 		addHandler(resource)

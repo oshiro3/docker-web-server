@@ -2,8 +2,8 @@ package parser
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"log"
 )
 
 // Resource is rooting definition
@@ -18,11 +18,11 @@ func Read(resourcePath string) *[]Resource {
 	var resources []Resource
 	err := json.Unmarshal(bytes, &resources)
 	if err != nil {
-		fmt.Println("error:", err)
+		log.Fatal(err)
 	}
 	for _, p := range resources {
-		fmt.Printf("Root is: %s\n", p.Root)
-		fmt.Printf("Response is: %s\n", p.Response)
+		log.Printf("Root is: %s\n", p.Root)
+		log.Printf("Response is: %s\n", p.Response)
 	}
 	return &resources
 }
