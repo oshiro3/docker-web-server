@@ -4,7 +4,16 @@
     "Response": {
       "text": "Monoter",
       "status": 500
-    }
+    },
+    "Resources": [
+      {
+        "Root": "babu",
+        "Response": {
+          "text": "ogyaogya",
+          "status": 404
+        }
+      }
+    ]
   },
   {
     "Root": "test2",

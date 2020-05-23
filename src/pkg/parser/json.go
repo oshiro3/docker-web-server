@@ -10,11 +10,13 @@ import (
 type Resource struct {
 	Root string
 	Response
+	Resources []Resource
 }
 
 type resource struct {
-	Root     string `json: "Root"`
-	Response json.RawMessage
+	Root      string `json: "Root"`
+	Response  json.RawMessage
+	Resources json.RawMessage
 }
 
 type Response struct {
@@ -24,15 +26,25 @@ type Response struct {
 
 // Read func create Resource struct from config file
 func Read(resourcePath string) *[]Resource {
-	var bytes = read(resourcePath)
-	var _resources []resource
+	bytes := read(resourcePath)
 	var resources []Resource
+
+	return createResources(bytes, resources)
+}
+
+func createResources(bytes []byte, resources []Resource) *[]Resource {
+
+	var _resources []resource
+
 	err := json.Unmarshal(bytes, &_resources)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	for _, p := range _resources {
+
 		var response Response
+
 		err := json.Unmarshal(p.Response, &response)
 		if err != nil {
 			log.Fatal(err)
@@ -43,9 +55,16 @@ func Read(resourcePath string) *[]Resource {
 			Response: response,
 		}
 
+		if len(p.Resources) > 0 {
+			var rs []Resource
+			re := createResources(p.Resources, rs)
+			log.Printf("resources: %+v\n", &re)
+			log.Printf("nested: %+v", r.Resources)
+			r.Resources = *re
+		}
+
 		resources = append(resources, r)
 	}
-	log.Printf("Read: %+v\n", resources)
 	return &resources
 }
 
@@ -55,8 +74,4 @@ func read(resourcePath string) []byte {
 		panic(err)
 	}
 	return bytes
-}
-
-func main() {
-	Read("../../config/root.json")
 }
