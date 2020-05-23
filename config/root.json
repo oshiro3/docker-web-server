@@ -1,10 +1,16 @@
 [
   {
     "Root": "test",
-    "Response": "Monoter"
+    "Response": {
+      "text": "Monoter",
+      "status": 500
+    }
   },
   {
     "Root": "test2",
-    "Response": "Monotae2"
+    "Response": {
+      "text": "ebiebiebidence",
+      "status": 200
+    }
   }
 ]

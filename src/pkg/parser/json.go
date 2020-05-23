@@ -8,22 +8,44 @@ import (
 
 // Resource is rooting definition
 type Resource struct {
-	Root     string
-	Response string
+	Root string
+	Response
+}
+
+type resource struct {
+	Root     string `json: "Root"`
+	Response json.RawMessage
+}
+
+type Response struct {
+	Text   string `json:"text"`
+	Status int
 }
 
 // Read func create Resource struct from config file
 func Read(resourcePath string) *[]Resource {
 	var bytes = read(resourcePath)
+	var _resources []resource
 	var resources []Resource
-	err := json.Unmarshal(bytes, &resources)
+	err := json.Unmarshal(bytes, &_resources)
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, p := range resources {
-		log.Printf("Root is: %s\n", p.Root)
-		log.Printf("Response is: %s\n", p.Response)
+	for _, p := range _resources {
+		var response Response
+		err := json.Unmarshal(p.Response, &response)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		r := Resource{
+			Root:     p.Root,
+			Response: response,
+		}
+
+		resources = append(resources, r)
 	}
+	log.Printf("Read: %+v\n", resources)
 	return &resources
 }
 
