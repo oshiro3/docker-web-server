@@ -2,7 +2,6 @@ package build
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"pkg/parser"
@@ -21,15 +20,15 @@ func build(resources []parser.Resource, s string) {
 
 func createFunc(res parser.Response) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(fmt.Sprintf("%+v\n", res)))
-		fmt.Printf("%+v\n", r)
+		w.WriteHeader(res.Status)
+		w.Write([]byte(fmt.Sprintf("%+v\n", res.Text)))
 	}
 }
 
 func addHandler(r parser.Resource, parent string) {
 	rooting := fmt.Sprintf("%s/%s", parent, r.Root)
-	log.Printf("%s\n", rooting)
-	log.Printf("%+v\n", r.Resources)
+	// log.Printf("%s\n", rooting)
+	// log.Printf("%+v\n", r.Resources)
 	if len(r.Resources) > 0 {
 		build(r.Resources, rooting)
 	}

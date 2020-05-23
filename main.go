@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"pkg/build"
@@ -10,7 +9,6 @@ import (
 
 func main() {
 	resources := parser.Read("./config/root.json")
-	fmt.Printf("main: %+v\n", *resources)
 	http.HandleFunc("/", helloHandler)
 	build.Build(resources)
 	http.ListenAndServe(":8888", nil)
