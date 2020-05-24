@@ -1,7 +1,8 @@
 FROM golang:1.13.11-stretch
-RUN mkdir /go/src/work
-WORKDIR /go/src/work
-COPY main.go /go/src/work
+
+COPY ./config /go/config/
+COPY ./src /go/src/
+COPY ./main.go /go
 RUN go build -o server main.go
 RUN chmod +x server
 CMD ./server

@@ -1,14 +1,20 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"path/filepath"
 
 	"pkg/build"
 	"pkg/parser"
 )
 
 func main() {
-	resources := parser.Read("./config/root.json")
+	configPath, err := filepath.Abs("./config/root.json")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	resources := parser.Read(configPath)
 	http.HandleFunc("/", helloHandler)
 	//	fmt.Println(resources)
 	build.Build(resources)

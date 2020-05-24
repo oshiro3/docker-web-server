@@ -8,4 +8,10 @@ docker-we-server provide a web server with a simple unique endpoint
 
 
 ## Usage
-* Dockerfile is setting now... Sorry.
+* Dockerhub is setting now... Sorry.
+```
+  git clone `https://github.com/oshiro3/docker-web-server.git`
+  cd docker-web-serer
+  docker build . -t docker-web-server
+  docker run -d -p -v ${CONFIG_JSON_FILE}:/go/config/root.json ${HOST_PORT}:8888
+```
