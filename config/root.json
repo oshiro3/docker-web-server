@@ -4,12 +4,12 @@
     "Response": [
       {
         "method": "GET",
-        "text": "Monoter",
+        "text": "Monster",
         "status": 500
       },
       {
         "method": "POST",
-        "text": "Reseive POST req",
+        "text": "Receive POST req",
         "status": 301
       }
     ],
