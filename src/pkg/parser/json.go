@@ -8,18 +8,19 @@ import (
 
 // Resource is rooting definition
 type Resource struct {
-	Root string
-	Response
-	Resources []Resource
+	Root     string
+	Response []Response
+	Children []Resource
 }
 
 type resource struct {
-	Root      string `json: "Root"`
-	Response  json.RawMessage
-	Resources json.RawMessage
+	Root     string `json: "Root"`
+	Response json.RawMessage
+	Children json.RawMessage
 }
 
 type Response struct {
+	Method string
 	Text   string `json:"text"`
 	Status int
 }
@@ -43,7 +44,7 @@ func createResources(bytes []byte, resources []Resource) *[]Resource {
 
 	for _, p := range _resources {
 
-		var response Response
+		var response []Response
 
 		err := json.Unmarshal(p.Response, &response)
 		if err != nil {
@@ -55,15 +56,15 @@ func createResources(bytes []byte, resources []Resource) *[]Resource {
 			Response: response,
 		}
 
-		if len(p.Resources) > 0 {
+		if len(p.Children) > 0 {
 			var rs []Resource
-			re := createResources(p.Resources, rs)
-			log.Printf("resources: %+v\n", &re)
-			log.Printf("nested: %+v", r.Resources)
-			r.Resources = *re
+			re := createResources(p.Children, rs)
+			log.Printf("resources: %+v\n", *re)
+			r.Children = *re
 		}
 
 		resources = append(resources, r)
+		log.Printf("resources: %+v\n", resources)
 	}
 	return &resources
 }

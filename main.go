@@ -10,6 +10,7 @@ import (
 func main() {
 	resources := parser.Read("./config/root.json")
 	http.HandleFunc("/", helloHandler)
+	//	fmt.Println(resources)
 	build.Build(resources)
 	http.ListenAndServe(":8888", nil)
 }

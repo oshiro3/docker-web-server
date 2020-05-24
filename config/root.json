@@ -1,25 +1,37 @@
 [
   {
     "Root": "test",
-    "Response": {
-      "text": "Monoter",
-      "status": 500
-    },
-    "Resources": [
+    "Response": [
+      {
+        "method": "GET",
+        "text": "Monoter",
+        "status": 500
+      },
+      {
+        "method": "POST",
+        "text": "Reseive POST req",
+        "status": 301
+      }
+    ],
+    "Children": [
       {
         "Root": "babu",
-        "Response": {
-          "text": "ogyaogya",
-          "status": 404
-        }
+        "Response": [
+          {
+            "text": "ogyaogya",
+            "status": 404
+          }
+        ]
       }
     ]
   },
   {
     "Root": "test2",
-    "Response": {
-      "text": "ebiebiebidence",
-      "status": 200
-    }
+    "Response": [
+      {
+        "text": "ebiebiebidence",
+        "status": 200
+      }
+    ]
   }
 ]
